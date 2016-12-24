@@ -43,10 +43,22 @@ class ViewController: UIViewController {
         let avgTip = tip / numPeople
         let avgTotal = total / numPeople
         
-        tipLabel.text = String(format: "$%.2f", tip)
-        totalLabel.text = String(format: "$%.2f", total)
-        avgTipLabel.text = String(format: "$%.2f", avgTip)
-        avgTotalLabel.text = String(format: "$%.2f", avgTotal)
+        // locale specific symbols:
+        let currencyFormatter = NumberFormatter()
+        currencyFormatter.usesGroupingSeparator = true
+        currencyFormatter.numberStyle = NumberFormatter.Style.currency
+        // localize to your grouping and decimal separator
+        currencyFormatter.locale = NSLocale.current
+        
+//        tipLabel.text = String(format: "$%.2f", tip)
+        tipLabel.text = currencyFormatter.string(from: NSNumber(value: tip))
+//        totalLabel.text = String(format: "$%.2f", total)
+//        avgTipLabel.text = String(format: "$%.2f", avgTip)
+//        avgTotalLabel.text = String(format: "$%.2f", avgTotal)
+        totalLabel.text = currencyFormatter.string(from: NSNumber(value: total))
+        avgTipLabel.text = currencyFormatter.string(from: NSNumber(value: avgTip))
+        avgTotalLabel.text = currencyFormatter.string(from: NSNumber(value: avgTotal))
+
     }
 
     
