@@ -25,6 +25,7 @@ The following **additional** features are implemented:
 
 * Added a launch page for the app
 * Added an app icon for this app
+* User can split the total amount of the bill by the size of the dinning party
 
 ## Video Walkthrough 
 
