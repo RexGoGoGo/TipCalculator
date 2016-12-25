@@ -28,11 +28,11 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillAppear(_ animated: Bool) {        
+    override func viewWillAppear(_ animated: Bool) {
         tipControl.selectedSegmentIndex = UserDefaults.standard.integer(forKey: "default.tippercent")
         let billRefDate = UserDefaults.standard.object(forKey: "defaults.billDate") as? NSDate
         let peopleRefDate = UserDefaults.standard.object(forKey: "defaults.peopleDate") as? NSDate
-        if ((billRefDate != nil && integer_t(NSDate().timeIntervalSince(billRefDate! as Date)) < 15) || (peopleRefDate != nil && integer_t(NSDate().timeIntervalSince(peopleRefDate! as Date)) < 15)){
+        if ((billRefDate != nil && integer_t(NSDate().timeIntervalSince(billRefDate! as Date)) < 600) || (peopleRefDate != nil && integer_t(NSDate().timeIntervalSince(peopleRefDate! as Date)) < 600)){
             billField.text = UserDefaults.standard.object(forKey: "defaults.billValue") as? String
             numPeopleField.text = UserDefaults.standard.object(forKey: "default.numPeopleValue") as? String
 
@@ -55,7 +55,6 @@ class ViewController: UIViewController {
     @IBAction func CalculateTip(_ sender: Any) {
         persistBillValue()
 
-        
         let percentages = [0.15, 0.18, 0.20]
         
         let bill = Double(billField.text!) ?? 0
