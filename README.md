@@ -38,6 +38,10 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 ## Notes
 
 Describe any challenges encountered while building the app.
+The first challenge is that I can only resume the value in the text field for bill amount and not
+for the party size when the app retarts in 10 mininutes.
+The second one is that there is still a lot to learn with Swift as a programming language and I have
+only had very limited experience with iOS app development.
 
 ## License
 
