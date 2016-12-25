@@ -27,12 +27,34 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func viewWillAppear(_ animated: Bool) {        
+        tipControl.selectedSegmentIndex = UserDefaults.standard.integer(forKey: "default.tippercent")
+        let billRefDate = UserDefaults.standard.object(forKey: "defaults.billDate") as? NSDate
+        let peopleRefDate = UserDefaults.standard.object(forKey: "defaults.peopleDate") as? NSDate
+        if ((billRefDate != nil && integer_t(NSDate().timeIntervalSince(billRefDate! as Date)) < 15) || (peopleRefDate != nil && integer_t(NSDate().timeIntervalSince(peopleRefDate! as Date)) < 15)){
+            billField.text = UserDefaults.standard.object(forKey: "defaults.billValue") as? String
+            numPeopleField.text = UserDefaults.standard.object(forKey: "default.numPeopleValue") as? String
+
+        }
+    }
 
     @IBAction func onTap(_ sender: Any) {
         view.endEditing(true)
     }
     
-    @IBAction func CalculateTip(_ sender: AnyObject) {
+    func persistBillValue() {
+        let defaults = UserDefaults.standard
+        defaults.set(billField.text, forKey: "defaults.billValue")
+        defaults.set(numPeopleField.text, forKey: "defaults.numPeopleValue")
+        defaults.set(NSDate(), forKey: "defaults.billDate")
+        defaults.set(NSDate(), forKey: "defaults.peopleDate")
+        defaults.synchronize()
+    }
+    
+    @IBAction func CalculateTip(_ sender: Any) {
+        persistBillValue()
+
         
         let percentages = [0.15, 0.18, 0.20]
         
@@ -47,14 +69,9 @@ class ViewController: UIViewController {
         let currencyFormatter = NumberFormatter()
         currencyFormatter.usesGroupingSeparator = true
         currencyFormatter.numberStyle = NumberFormatter.Style.currency
-        // localize to your grouping and decimal separator
         currencyFormatter.locale = NSLocale.current
         
-//        tipLabel.text = String(format: "$%.2f", tip)
         tipLabel.text = currencyFormatter.string(from: NSNumber(value: tip))
-//        totalLabel.text = String(format: "$%.2f", total)
-//        avgTipLabel.text = String(format: "$%.2f", avgTip)
-//        avgTotalLabel.text = String(format: "$%.2f", avgTotal)
         totalLabel.text = currencyFormatter.string(from: NSNumber(value: total))
         avgTipLabel.text = currencyFormatter.string(from: NSNumber(value: avgTip))
         avgTotalLabel.text = currencyFormatter.string(from: NSNumber(value: avgTotal))
